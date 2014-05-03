@@ -1,0 +1,12 @@
+{
+    "name": "Auto-Refresh",
+    "version": "0.0.1",
+    "dependencies": {
+        "jquery": "latest",
+        "async": "latest",
+        "bootstrap": "latest",
+        "underscore": "latest",
+        "highcharts": "latest",
+        "momentjs": "latest"
+    }
+}
