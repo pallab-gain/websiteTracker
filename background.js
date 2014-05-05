@@ -34,7 +34,7 @@ function get_time(gg) {
     })(gg);
 };
 function set_clear(main_callback) {
-    return (function() {
+    return (function () {
         var keys;
         async.series([
             function (callback) {
@@ -59,23 +59,14 @@ function set_clear(main_callback) {
 }
 setInterval(function () {
     if (!_.isUndefined(current_active)) {
-        var hn = "xerxes-" + current_active.hostname.toString();
-        var cb = localStorage.getItem(hn);
-        var dd = localStorage.getItem('cur_date');
-        if (_.isNull(dd)) {
-            localStorage.setItem('cur_date', moment().format('l'));
-            set_clear(function(){
-                if (_.isNull(cb)) {
-                    localStorage.setItem(hn, 0);
-                } else {
-                    localStorage.setItem(hn, (_.isNaN(parseFloat(cb)) ? parseFloat(0) : parseFloat(cb) ) + 1);
-                }
-                chrome.browserAction.setBadgeText({text: get_time(cb)});
-            });
-        } else {
-            if (dd !== moment().format('l')) {
+        var _hn=current_active.hostname.toString();
+        if ( _hn !== 'newtab') {
+            var hn = "xerxes-" + _hn;
+            var cb = localStorage.getItem(hn);
+            var dd = localStorage.getItem('cur_date');
+            if (_.isNull(dd)) {
                 localStorage.setItem('cur_date', moment().format('l'));
-                set_clear(function(){
+                set_clear(function () {
                     if (_.isNull(cb)) {
                         localStorage.setItem(hn, 0);
                     } else {
@@ -84,12 +75,24 @@ setInterval(function () {
                     chrome.browserAction.setBadgeText({text: get_time(cb)});
                 });
             } else {
-                if (_.isNull(cb)) {
-                    localStorage.setItem(hn, 0);
+                if (dd !== moment().format('l')) {
+                    localStorage.setItem('cur_date', moment().format('l'));
+                    set_clear(function () {
+                        if (_.isNull(cb)) {
+                            localStorage.setItem(hn, 0);
+                        } else {
+                            localStorage.setItem(hn, (_.isNaN(parseFloat(cb)) ? parseFloat(0) : parseFloat(cb) ) + 1);
+                        }
+                        chrome.browserAction.setBadgeText({text: get_time(cb)});
+                    });
                 } else {
-                    localStorage.setItem(hn, (_.isNaN(parseFloat(cb)) ? parseFloat(0) : parseFloat(cb) ) + 1);
+                    if (_.isNull(cb)) {
+                        localStorage.setItem(hn, 0);
+                    } else {
+                        localStorage.setItem(hn, (_.isNaN(parseFloat(cb)) ? parseFloat(0) : parseFloat(cb) ) + 1);
+                    }
+                    chrome.browserAction.setBadgeText({text: get_time(cb)});
                 }
-                chrome.browserAction.setBadgeText({text: get_time(cb)});
             }
         }
     } else {
@@ -100,8 +103,8 @@ chrome.tabs.onActivated.addListener(function (tabId, windowId) {
     chrome.tabs.query({"active": true, "lastFocusedWindow": true}, function (tab) {
         //console.log('onActive');
         /*if (_.isNull(localStorage.getItem("email"))) {
-            localStorage.setItem("email", "pallab.gain@gmail.com");
-        }*/
+         localStorage.setItem("email", "pallab.gain@gmail.com");
+         }*/
         var bucket = {"id": _.first(tab).id, "hostname": new URL(_.first(tab).url).hostname};
         current_active = bucket;
         //console.log('current active ', _.first(tab).id,_.first(tab).url,new URL(_.first(tab).url).hostname);
