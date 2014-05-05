@@ -59,8 +59,8 @@ function set_clear(main_callback) {
 }
 setInterval(function () {
     if (!_.isUndefined(current_active)) {
-        var _hn=current_active.hostname.toString();
-        if ( _hn !== 'newtab') {
+        var _hn = current_active.hostname.toString();
+        if (_hn !== 'newtab') {
             var hn = "xerxes-" + _hn;
             var cb = localStorage.getItem(hn);
             var dd = localStorage.getItem('cur_date');
@@ -101,38 +101,34 @@ setInterval(function () {
 }, 1000);
 chrome.tabs.onActivated.addListener(function (tabId, windowId) {
     chrome.tabs.query({"active": true, "lastFocusedWindow": true}, function (tab) {
-        //console.log('onActive');
-        /*if (_.isNull(localStorage.getItem("email"))) {
-         localStorage.setItem("email", "pallab.gain@gmail.com");
-         }*/
+        console.log('onActive');
         var bucket = {"id": _.first(tab).id, "hostname": new URL(_.first(tab).url).hostname};
         current_active = bucket;
         //console.log('current active ', _.first(tab).id,_.first(tab).url,new URL(_.first(tab).url).hostname);
     })
 });
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, cur_tab) {
-    if (!_.isUndefined(localStorage.getItem("email"))) {
-        //console.log('onUpdate');
-        if (changeInfo.status === "complete") {
-            if (cur_tab.active) {
-                var bucket = {"id": cur_tab.id, "hostname": new URL(cur_tab.url).hostname};
-                current_active = bucket;
-            }
+    if (changeInfo.status === "complete") {
+        if (cur_tab.active) {
+            var bucket = {"id": cur_tab.id, "hostname": new URL(cur_tab.url).hostname};
+            current_active = bucket;
+            console.log('onUpdateComplete');
         }
     }
+
 });
 chrome.tabs.onRemoved.addListener(function (tabid, cur_tab) {
-    if (!_.isUndefined(localStorage.getItem("email"))) {
-        //console.log('removed ',tabid,cur_tab);
-        chrome.tabs.query({"active": true, "lastFocusedWindow": true}, function (tab) {
-            if (!_.isEmpty(tab) && _.first(tab).id !== tabid) {
-                var bucket = {"id": _.first(tab).id, "hostname": new URL(_.first(tab).url).hostname};
-                current_active = bucket;
-            } else {
-                if (!_.isUndefined(current_active)) {
-                    current_active = undefined;
-                }
+
+    console.log('onRemove');
+    chrome.tabs.query({"active": true, "lastFocusedWindow": true}, function (tab) {
+        if (!_.isEmpty(tab) && _.first(tab).id !== tabid) {
+            var bucket = {"id": _.first(tab).id, "hostname": new URL(_.first(tab).url).hostname};
+            current_active = bucket;
+        } else {
+            if (!_.isUndefined(current_active)) {
+                current_active = undefined;
             }
-        });
-    }
+        }
+    });
+
 });
