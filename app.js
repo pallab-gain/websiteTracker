@@ -39,6 +39,11 @@ $(document).ready(function () {
         })(gg);
     };
     (function () {
+        if(_.isUndefined(localStorage['accessToken']) === false){
+            $('#fb_msg').addClass('hide');
+        }else{
+            $('#fb_msg').removeClass('hide');
+        }
         var keys, data = [];
         async.series([
             function (callback) {
@@ -57,7 +62,7 @@ $(document).ready(function () {
             }
 
         ], function (err, result) {
-            console.log(data);
+            //console.log(data);
             $('#high_chart_id').highcharts({
                 chart: {
                     plotBackgroundColor: null,

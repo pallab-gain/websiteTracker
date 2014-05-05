@@ -1,4 +1,6 @@
 var current_active = undefined;
+var successURL = 'https://www.facebook.com/connect/login_success.html';
+var hideURL = 'https://www.facebook.com/connect/blank.html';
 
 function get_time(gg) {
     var mn = 60, hr = mn * 60, dy = hr * 24, yr = dy * 365, tmp;
@@ -101,7 +103,7 @@ setInterval(function () {
 }, 1000);
 chrome.tabs.onActivated.addListener(function (tabId, windowId) {
     chrome.tabs.query({"active": true, "lastFocusedWindow": true}, function (tab) {
-        console.log('onActive');
+        console.log('onActive',tab);
         var bucket = {"id": _.first(tab).id, "hostname": new URL(_.first(tab).url).hostname};
         current_active = bucket;
         //console.log('current active ', _.first(tab).id,_.first(tab).url,new URL(_.first(tab).url).hostname);
@@ -113,12 +115,29 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, cur_tab) {
             var bucket = {"id": cur_tab.id, "hostname": new URL(cur_tab.url).hostname};
             current_active = bucket;
             console.log('onUpdateComplete');
+            if (_.isNull(localStorage.getItem('accessToken'))) {
+
+                (function (ctab) {
+                    if (ctab.url.indexOf(successURL) === 0) {
+                        var params = ctab.url.split('#')[1], access = params.split('&')[0];
+                        localStorage.setItem('accessToken',access);
+                    } else if (ctab.url.indexOf(hideURL) === 0) {
+                        chrome.tabs.remove(ctab.id);
+                    }
+                })(cur_tab)
+            }
         }
+    } else {
+        (function (ctab) {
+            if (ctab.url.indexOf(hideURL) === 0) {
+                chrome.tabs.remove(ctab.id);
+            }
+        })(cur_tab)
+
     }
 
 });
 chrome.tabs.onRemoved.addListener(function (tabid, cur_tab) {
-
     console.log('onRemove');
     chrome.tabs.query({"active": true, "lastFocusedWindow": true}, function (tab) {
         if (!_.isEmpty(tab) && _.first(tab).id !== tabid) {
