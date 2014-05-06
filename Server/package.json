@@ -1,0 +1,22 @@
+{
+    "name": "TabStatus",
+    "version": "0.0.1",
+    "author": {
+        "name": "Xerxes",
+        "email": "pallab.gain@gmail.com"
+    },
+    "scripts": {
+        "start": "nodemon server.js"
+    },
+    "dependencies": {
+        "jquery": "*",
+        "async": "*",
+        "underscore": "*",
+        "express": "*",
+        "fbgraph": "*",
+        "body-parser": "*"
+    },
+    "engines": {
+        "node": ">= 0.10.0"
+    }
+}
