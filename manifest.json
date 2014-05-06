@@ -4,8 +4,9 @@
     "permissions":[
         "tabs",
         "activeTab",
-        "identity",
-        "storage"
+        "webRequest",
+        "storage",
+        "http://localhost:3000/*"
     ],
     "background":{
         "scripts" : ["bower_components/momentjs/moment.js","bower_components/async/lib/async.js","bower_components/jquery/dist/jquery.js","bower_components/underscore/underscore.js","background.js"]

@@ -39,7 +39,7 @@ $(document).ready(function () {
         })(gg);
     };
     (function () {
-        if(_.isUndefined(localStorage['accessToken']) === false){
+        if(_.isUndefined(localStorage['tSfbid']) === false){
             $('#fb_msg').addClass('hide');
         }else{
             $('#fb_msg').removeClass('hide');

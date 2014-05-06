@@ -30,6 +30,7 @@
 
     app.route('/fblogin')
         .get(function (request, response) {
+            console.log('fblogin request');
             if (!request.query.code) {
                 var authUrl = graph.getOauthUrl({
                     "client_id": conf.client_id, "redirect_uri": conf.redirect_uri, "scope": conf.scope
@@ -54,13 +55,19 @@
 
     app.route('/loginsuccess')
         .get(function (request, response) {
+            console.log('fb login success');
             return response.sendfile('success.html');
         });
 
     app.route('/getdata')
         .get(function (request, response) {
+            console.log('fb getdata')
             graph.get('/me', function (err, res) {
-                return response.send({'err': err, 'response': res});
+                return response.send({'err': err, 'response': res });
             })
         });
+    app.route('/getaccesstoken')
+        .get(function (request, response) {
+            return response.send({ 'accessToken': graph.getAccessToken()});
+        })
 })();
