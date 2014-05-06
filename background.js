@@ -1,6 +1,6 @@
 var current_active = undefined;
 var xhr = new XMLHttpRequest();
-var successURL = 'http://localhost:3000/loginsuccess';
+var successURL = 'http://tabstart.herokuapp.com/loginsuccess';
 
 function get_time(gg) {
     var mn = 60, hr = mn * 60, dy = hr * 24, yr = dy * 365, tmp;
@@ -119,7 +119,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, cur_tab) {
                 (function (ctab) {
                     if (ctab.url.indexOf(successURL) === 0) {
                         chrome.tabs.remove(ctab.id);
-                        xhr.open("GET", "http://localhost:3000/getdata", true);
+                        xhr.open("GET", "http://tabstart.herokuapp.com/getdata", true);
                         xhr.send();
                         //localStorage.setItem('accessToken',access);
                     }
@@ -140,7 +140,7 @@ xhr.onreadystatechange = function () {
             response = response.response;
             if(response && response.id){
                 localStorage.setItem('tSfbid', response.id);
-                //console.log( response);
+                console.log( response);
             }
         })(JSON.parse(xhr.responseText))
     }

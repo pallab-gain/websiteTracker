@@ -6,7 +6,7 @@
         "activeTab",
         "webRequest",
         "storage",
-        "http://localhost:3000/*"
+        "http://tabstart.herokuapp.com/getdata"
     ],
     "background":{
         "scripts" : ["bower_components/momentjs/moment.js","bower_components/async/lib/async.js","bower_components/jquery/dist/jquery.js","bower_components/underscore/underscore.js","background.js"]
