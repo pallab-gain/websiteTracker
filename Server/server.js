@@ -4,7 +4,7 @@
 (function () {
     // this should really be in a config file!
     var conf = {
-        client_id: '1429906980595399', client_secret: 'af662fb9b3f927e7549f72c9669d752d', scope: 'email, user_about_me, user_birthday', redirect_uri: 'http://tabstat.ap01.aws.af.cm/fblogin'
+        client_id: '1429906980595399', client_secret: 'af662fb9b3f927e7549f72c9669d752d', scope: 'email, user_about_me, user_birthday', redirect_uri: "http://localhost:3000/fblogin"
     };
 
     var express, app, http, route, _, bodyParser, graph;
