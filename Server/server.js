@@ -98,7 +98,7 @@
                     request.body.keys[2],
                     request.body.keys[3],
                     item[0], item[1], item[2], item[3] ], function (err, result) {
-                        ;
+                    ;
                     if (err) {
                         callback1(err);
                     } else {
@@ -116,7 +116,16 @@
         });
 
     app.route('/getdata')
-        .get(function(request,response){
+        .post(function (request, response) {
+            var st = request.body.start_date, ed = (request.body.end_date || request.body.start_date);
+            con.query('select ??,?? from ?? where ?? = ? and (?? >= ? and ?? <= ?',
+                ['tabname', 'timespan', 'logtable', 'date', st, 'date', ed], function (err, result) {
+                    if (err) {
+                        return response.send({'err': err, 'result': null});
+                    } else {
+                        return response.send({'err': null, 'result': result});
+                    }
+                });
 
         });
 })();
