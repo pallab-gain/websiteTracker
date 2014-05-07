@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title> Stat Page</title>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <script src="/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css"></script>
+    <link rel="stylesheet" href="/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
     <style>
         body {
             /*min-height: 250px;*/
@@ -17,17 +17,12 @@
     <div class="row" style="text-align: center" id="fb_msg">
         <a target="_blank" class="btn btn-primary btn-xs" href="http://localhost:3000/fblogin">Facebook Connect</a>
     </div>
-    <div class="row">
-        <form>
-            <div class="form-group">
-                <label for="reservationtime">Reservation dates:</label>
-
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" name="reservation" id="reservationtime" class="col-xs-4"/>
-                </div>
-            </div>
-        </form>
+    <div class="row" id="datepicker">
+        <div class="input-group input-group-sm col-xs-5 col-sm-5 col-md-5 col-lg-5" >
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            <input type="text" name="reservation" id="reservationtime" class="form-control"
+                   placeholder="pick a daterange to see past..."/>
+        </div>
     </div>
     <div class="row">
         <div id="high_chart_id" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>

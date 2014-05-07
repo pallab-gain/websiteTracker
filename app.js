@@ -38,12 +38,22 @@ $(document).ready(function () {
             return msg;
         })(gg);
     };
-    $('#reservationtime').daterangepicker({format: 'MM/DD/YYYY h:mm A' });
+
+
     (function () {
+        $('#reservationtime').focus(function () {
+            $('#reservationtime').daterangepicker({format: 'YYYY/MM/DD'}, function (start, end) {
+                start = start.format('YYYY-MM-DD');
+                end = end.format('YYYY-MM-DD')
+
+            });
+        });
         if (_.isUndefined(localStorage['tSfbid']) === false) {
             $('#fb_msg').addClass('hide');
+            $('#datepicker').removeClass('hide');
         } else {
             $('#fb_msg').removeClass('hide');
+            $('#datepicker').addClass('hide');
         }
         var keys, data = [];
         async.series([
