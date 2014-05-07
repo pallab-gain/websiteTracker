@@ -2,6 +2,7 @@
     "name": "TabStatus",
     "version": "0.0.1",
     "dependencies": {
+        "angular": "latest",
         "jquery": "latest",
         "async": "latest",
         "bootstrap": "latest",

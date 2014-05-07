@@ -39,12 +39,28 @@ $(document).ready(function () {
             })(gg);
         };
 
+        function fetch_data(start_date, end_date, userid) {
+            var d = $.Deferred();
+            jQuery.ajax({
+                'type': 'POST',
+                'url': "http://localhost:3000/gettimespent",
+                'data': {'start_date': start_date, 'end_date': end_date, 'userid': userid},
+                'async': false,
+                'success': function (data) {
+                    console.log('successfully update data', data);
+                    d.resolve(data);
+                }
+            });
+            return d.promise();
+        }
+
+
         function get_data(data_type, callback, start_date, end_data, userid) {
             return (function (data_type) {
                 if (data_type === 'local') {
                     return callback(localStorage);
                 } else {
-                    return callback(null);
+
                 }
             })(data_type, start_date, end_data, userid)
         }
