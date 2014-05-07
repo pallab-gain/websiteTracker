@@ -114,15 +114,20 @@
             });
         });
 
-    app.route('/getdata')
+    app.route('/gettimespent')
         .post(function (request, response) {
-            var st = request.body.start_date, ed = (request.body.end_date || request.body.start_date);
+            var st = request.body.start_date, ed = request.body.end_date , userid = request.body.userid;
             con.query('select ??,?? from ?? where ?? = ? and (?? >= ? and ?? <= ?',
-                ['tabname', 'timespan', 'logtable', 'date', st, 'date', ed], function (err, result) {
+                ['tabname', 'timespan', 'logtable', 'userid', 'userid', 'date', st, 'date', ed], function (err, result) {
                     if (err) {
                         return response.send({'err': err, 'result': null});
                     } else {
-                        return response.send({'err': null, 'result': result});
+                        var data = {};
+                        async.each(result, function (item, callback) {
+                            data[ item['tabname'] ] = data[ item['timespan'] ];
+                        }, function (err) {
+                            return response.send({'err': null, 'result': data});
+                        })
                     }
                 });
 

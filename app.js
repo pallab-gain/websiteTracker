@@ -39,14 +39,14 @@ $(document).ready(function () {
             })(gg);
         };
 
-        function get_data(data_type) {
+        function get_data(data_type, callback, start_date, end_data, userid) {
             return (function (data_type) {
                 if (data_type === 'local') {
-                    return localStorage;
+                    return callback(localStorage);
                 } else {
-
+                    return callback(null);
                 }
-            })(data_type)
+            })(data_type, start_date, end_data, userid)
         }
 
         function present(_raw_data) {
@@ -69,7 +69,7 @@ $(document).ready(function () {
                     }
 
                 ], function (err, result) {
-                    //console.log(data);
+                    console.log('before build', data);
                     $('#high_chart_id').highcharts({
                         chart: {
                             plotBackgroundColor: null,
@@ -131,14 +131,21 @@ $(document).ready(function () {
                 $('#reservationtime').daterangepicker({format: 'YYYY/MM/DD'}, function (start, end) {
                     start = start.format('YYYY-MM-DD');
                     end = end.format('YYYY-MM-DD')
-                    return present(null);
+                    return get_data('server', function (data) {
+                        return present(data);
+                    }, start, end, localStorage['tSfbid']);
                 });
             });
             $('#clear_btn').click(function () {
                 $("#reservationtime").val("");
-                return present(get_data('local'));
+                return get_data('local', function (data) {
+                    return present(data);
+                });
             })
-            return present(get_data('local'));
+            return get_data('local', function (data) {
+                return present(data);
+            });
+
         })()
     }
 )
