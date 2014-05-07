@@ -32,16 +32,17 @@ $(document).ready(function () {
                 msg = msg + tmp + ' Minutes ';
                 given = given - (tmp * mn);
             }
-            if( given>0 ){
+            if (given > 0) {
                 msg = msg + given + ' Seconds ';
             }
-            return msg ;
+            return msg;
         })(gg);
     };
+    $('#reservationtime').daterangepicker({format: 'MM/DD/YYYY h:mm A' });
     (function () {
-        if(_.isUndefined(localStorage['tSfbid']) === false){
+        if (_.isUndefined(localStorage['tSfbid']) === false) {
             $('#fb_msg').addClass('hide');
-        }else{
+        } else {
             $('#fb_msg').removeClass('hide');
         }
         var keys, data = [];

@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <title> Stat Page</title>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <script src="/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css"></script>
     <style>
         body {
             /*min-height: 250px;*/
-            min-width: 250px;
+            min-width: 550px;
         }
     </style>
 </head>
 <body>
-<div class="alert-danger" style="text-align: center" id="fb_msg">
-    <a target="_blank" href="http://localhost:3000/fblogin">Facebook Connect</a>
-</div>
 <div class="container">
-    <div id="high_chart_id" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+    <div class="row" style="text-align: center" id="fb_msg">
+        <a target="_blank" class="btn btn-primary btn-xs" href="http://localhost:3000/fblogin">Facebook Connect</a>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label for="reservationtime">Reservation dates:</label>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="reservation" id="reservationtime" class="col-xs-4"/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div id="high_chart_id" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+    </div>
 </div>
 </body>
 <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -25,5 +40,6 @@
 <script src="/bower_components/highcharts/highcharts.js"></script>
 <script src="/bower_components/underscore/underscore.js"></script>
 <script src="/bower_components/momentjs/moment.js"></script>
+<script src="/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="/app.js"></script>
 </html>
