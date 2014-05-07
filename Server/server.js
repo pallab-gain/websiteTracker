@@ -98,7 +98,6 @@
                     request.body.keys[2],
                     request.body.keys[3],
                     item[0], item[1], item[2], item[3] ], function (err, result) {
-                    ;
                     if (err) {
                         callback1(err);
                     } else {
