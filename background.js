@@ -1,5 +1,5 @@
 var current_active = undefined;
-var successURL = 'http://localhost:3000/loginsuccess';
+var successURL = 'http://http://192.241.167.91:51795/loginsuccess';
 
 function get_time(gg) {
     var mn = 60, hr = mn * 60, dy = hr * 24, yr = dy * 365, tmp;
@@ -83,7 +83,7 @@ function storein_db(_date, _cb, _hn) {
                     //console.log('storein_db', values);
                     jQuery.ajax({
                         'type': 'POST',
-                        'url': "http://localhost:3000/postdata",
+                        'url': "http://192.241.167.91:51795/postdata",
                         'data': {'values': values},
                         'success': function (data) {
                             //console.log('successfully update data', data);

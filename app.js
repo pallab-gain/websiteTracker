@@ -118,7 +118,7 @@ app.factory('collectData', function ($http, $q) {
     };
     collectData.getServerData = function (start, end, userid) {
         var d = $q.defer();
-        var url = 'http://localhost:3000/gettimespent';
+        var url = 'http://192.241.167.91:51795/gettimespent';
         $http({'method': 'POST', 'url': url, 'data': {'start_date': start, 'end_date': end, 'userid': userid}}).success(function (data, status, headers, config) {
             collectData.serverData = data.result;
             d.resolve();
