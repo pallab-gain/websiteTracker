@@ -128,7 +128,7 @@ setInterval(function () {
                 if (dd !== moment().utc().format('YYYY-MM-DD')) {
                     //console.log('2');
                     localStorage.setItem('cur_date', moment().utc().format('YYYY-MM-DD'));
-                    return storein_db(localStorage['cur_date'], cb, hn);
+                    return storein_db(dd, cb, hn);
                 } else {
                     //console.log('3');
                     if (_.isNull(cb)) {
