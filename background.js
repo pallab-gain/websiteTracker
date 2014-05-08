@@ -1,5 +1,5 @@
 var current_active = undefined;
-var successURL = 'http://http://192.241.167.91:51795/loginsuccess';
+var successURL = 'http://192.241.167.91:51795/loginsuccess';
 
 function get_time(gg) {
     var mn = 60, hr = mn * 60, dy = hr * 24, yr = dy * 365, tmp;
@@ -164,7 +164,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, cur_tab) {
                         chrome.tabs.remove(ctab.id);
                         jQuery.ajax({
                             'type': 'GET',
-                            'url': "http://localhost:3000/getdata",
+                            'url': "http://192.241.167.91:51795/getdata",
                             'success': function (data) {
                                 //console.log(data);
                                 if (_.isNull(data.err) && data.response) {
