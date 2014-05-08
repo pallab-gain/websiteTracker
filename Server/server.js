@@ -30,7 +30,7 @@
     app = express();
 
     app.use(bodyParser());
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || 51795);
 
     http.createServer(app).listen(app.get('port'), function () {
         console.log('server running @ ', app.get('port'))
