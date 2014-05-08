@@ -84,7 +84,7 @@ function storein_db(_date, _cb, _hn) {
                     jQuery.ajax({
                         'type': 'POST',
                         'url': "http://localhost:3000/postdata",
-                        'data': {'values': values, 'keys': ['date', 'tabname', 'timespan', 'userid']},
+                        'data': {'values': values},
                         'success': function (data) {
                             //console.log('successfully update data', data);
                             callback4(null);

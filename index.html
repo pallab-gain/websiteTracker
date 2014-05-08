@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="tabTracker">
 <head lang="en">
     <meta charset="UTF-8">
     <title> Stat Page</title>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="/bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+    <link rel="stylesheet" href="/bower_components/angular/angular-csp.css"/>
+
     <style>
         body {
             /*min-height: 250px;*/
@@ -12,30 +14,40 @@
         }
     </style>
 </head>
-<body>
+<body ng-controller="tabTrackerCtrl">
 <div class="container">
-    <div class="row" style="text-align: center" id="fb_msg">
-        <a target="_blank" class="btn btn-primary btn-xs" href="http://localhost:3000/fblogin">Facebook Connect</a>
+    <div class="row" style="text-align: center" ng-hide="fbid">
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            To get past records please always
+            <a target="_blank" href="http://localhost:3000/fblogin"> <strong>Connect with Facebook</strong></a>
+        </div>
+
     </div>
-    <div class="row" id="datepicker">
-        <div class="input-group input-group-sm col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+    <div class="row" id="datepicker" ng-show="fbid">
+        <div class="input-group input-group-sm col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             <input type="text" name="reservation" id="reservationtime" class="form-control"
                    placeholder="pick a daterange to see past..."/>
-            <span class="input-group-addon btn" id="clear_btn"><span class="glyphicon glyphicon-trash"></span></span></span>
+            <span class="input-group-addon btn" id="clear_btn"><span
+                    class="glyphicon glyphicon-trash"></span></span></span>
         </div>
     </div>
     <div class="row">
-        <div id="high_chart_id" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        <div id="high_chart_id" style="min-width: 450px; min-height: 550px; margin: 0 auto"></div>
     </div>
 </div>
-</body>
+
 <script src="/bower_components/jquery/dist/jquery.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
 <script src="/bower_components/async/lib/async.js"></script>
 <script src="/bower_components/highcharts/highcharts.js"></script>
 <script src="/bower_components/underscore/underscore.js"></script>
 <script src="/bower_components/momentjs/moment.js"></script>
 <script src="/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
 <script src="/app.js"></script>
+
+</body>
 </html>

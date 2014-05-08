@@ -14,8 +14,9 @@
         "underscore": "*",
         "express": "*",
         "fbgraph": "*",
-        "mysql": "*",
-        "body-parser": "*"
+        "body-parser": "*",
+        "knex": "*",
+        "mysql": "*"
     },
     "engines": {
         "node": ">= 0.10.0"
