@@ -42,7 +42,7 @@ app.factory('highChart', function () {
             return msg;
         })(gg);
     };
-    highChart.drawpie = function (data) {
+    highChart.drawpie = function (data,total) {
         //console.log(data);
         $('#high_chart_id').highcharts({
             chart: {
@@ -51,7 +51,7 @@ app.factory('highChart', function () {
                 plotShadow: false
             },
             title: {
-                text: 'Visit Statistics'
+                text: 'You spent '+ get_time(total)
             },
             tooltip: {
                 formatter: function () {
@@ -82,7 +82,7 @@ app.factory('highChart', function () {
             series: [
                 {
                     type: 'pie',
-                    name: 'Visit Statics',
+                    name: 'Tab Status',
                     data: data
                 }
             ]
@@ -94,7 +94,7 @@ app.factory('collectData', function ($http, $q) {
     var collectData = {};
     collectData.collectData = function (raw_data) {
         var d = $q.defer();
-        var keys , data = []
+        var keys , data = [],total_time= 0,tmp_time;
         async.series([
             function (get_keys) {
                 keys = _.keys(raw_data);
@@ -103,7 +103,9 @@ app.factory('collectData', function ($http, $q) {
             function (save_data) {
                 async.each(keys, function (cur_key, callback1) {
                     if (cur_key.substr(0, 7) === 'xerxes-') {
-                        data.push([ cur_key.substr(7), parseFloat(raw_data[cur_key]) ]);
+                        tmp_time=parseFloat(raw_data[cur_key]);
+                        total_time = total_time+tmp_time;
+                        data.push([ cur_key.substr(7), tmp_time ]);
                     }
                     callback1(null);
                 }, function (err) {
@@ -112,6 +114,7 @@ app.factory('collectData', function ($http, $q) {
             }
         ], function (err) {
             collectData.data = data;
+            collectData.total_time = total_time;
             d.resolve();
         });
         return d.promise;
@@ -130,7 +133,7 @@ app.factory('collectData', function ($http, $q) {
 app.controller('tabTrackerCtrl', function ($scope, collectData, highChart) {
     $scope.fbid = localStorage['tSfbid'];
     collectData.collectData(localStorage).then(function () {
-        highChart.drawpie(collectData.data);
+        highChart.drawpie(collectData.data,collectData.total_time);
     });
 
     $('#reservationtime').focus(function () {
@@ -139,7 +142,7 @@ app.controller('tabTrackerCtrl', function ($scope, collectData, highChart) {
             end = end.format('YYYY-MM-DD')
             collectData.getServerData(start, end, $scope.fbid).then(function () {
                 collectData.collectData(collectData.serverData).then(function () {
-                    highChart.drawpie(collectData.data);
+                    highChart.drawpie(collectData.data,collectData.total_time);
                 });
             });
         });
@@ -147,7 +150,7 @@ app.controller('tabTrackerCtrl', function ($scope, collectData, highChart) {
     $('#clear_btn').click(function () {
         $("#reservationtime").val("");
         collectData.collectData(localStorage).then(function () {
-            highChart.drawpie(collectData.data);
+            highChart.drawpie(collectData.data,collectData.total_time);
         });
     });
 });
