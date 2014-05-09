@@ -51,7 +51,7 @@ app.factory('highChart', function () {
                 plotShadow: false
             },
             title: {
-                text: 'You spent ' + get_time(total)
+                text: 'You spent total ' + get_time(total)
             },
             tooltip: {
                 formatter: function () {
